@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="gu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>કુબાવત પરિવાર — સંપાદિત કરી શકાય તેવું વંશવૃક્ષ</title>
+<style>
+@font-face{font-family:Gujarati;src:local("Noto Sans Gujarati"),local("Noto Sans Gujarati UI")}
+:root{--ink:#17324d;--gold:#b88937;--cream:#fffaf0;--line:#d9c9a3;--soft:#f3f6f8}
+*{box-sizing:border-box}body{margin:0;background:#f4f1e9;color:var(--ink);font-family:Gujarati,"Noto Sans Gujarati",sans-serif}
+header{background:linear-gradient(120deg,#15344e,#275c68);color:#fff;padding:28px 18px;text-align:center;border-bottom:5px solid var(--gold)}
+h1{margin:0;font-size:clamp(25px,4vw,40px)}header p{margin:8px 0 0}
+.toolbar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px;background:#fff;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:4}
+button,.btn{border:0;border-radius:8px;padding:10px 14px;font:inherit;cursor:pointer;background:#1d5263;color:#fff}
+button.secondary{background:#e8edf0;color:#17324d;border:1px solid #c8d3d8}
+button.gold{background:#a7792d;color:#fff}
+main{max-width:1300px;margin:20px auto;padding:0 14px}
+.notice{background:#fff7df;border:1px solid #e8d49c;border-radius:10px;padding:12px;margin-bottom:18px}
+.branch{background:#fff;border:1px solid var(--line);border-radius:14px;margin:18px 0;overflow:hidden;box-shadow:0 4px 12px #17324d0b}
+.branch h2{margin:0;padding:13px 16px;background:#e9dfc9;font-size:22px}
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px;padding:14px}
+.person{border:1px solid #d6dfe3;border-radius:12px;background:#fff;padding:12px;text-align:center;cursor:pointer;min-height:135px;transition:.15s}
+.person:hover{border-color:var(--gold);box-shadow:0 4px 14px #0001;transform:translateY(-2px)}
+.avatar{width:62px;height:62px;border-radius:50%;object-fit:cover;background:#edf1f3;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;border:2px solid #dfc78e;color:#6b7880;font-size:22px;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.person strong{display:block;font-size:17px}.person small{display:block;color:#687b86;margin-top:4px}
+footer{text-align:center;padding:20px;color:#61717b}
+dialog{border:0;border-radius:16px;max-width:650px;width:calc(100% - 24px);padding:0;box-shadow:0 15px 70px #0004}
+dialog::backdrop{background:#10253699}.modalhead{background:#173e55;color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.modalbody{padding:18px;max-height:75vh;overflow:auto}.field{margin:10px 0}.field label{display:block;font-weight:bold;margin-bottom:4px}.field input,.field textarea,.field select{width:100%;padding:10px;border:1px solid #c9d4d9;border-radius:8px;font:inherit;background:#fff}.field textarea{min-height:75px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.profile-photo{width:100px;height:100px;object-fit:cover;border-radius:50%;border:3px solid var(--gold);background:#edf1f3}
+.modalactions{display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid #eee}
+#detailGrid{display:grid;grid-template-columns:110px 1fr;gap:8px 12px}#detailGrid dt{font-weight:bold;color:#667883}#detailGrid dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:560px){.row{grid-template-columns:1fr}.toolbar{position:static}.people{grid-template-columns:repeat(2,minmax(0,1fr))}.person{padding:8px}.person strong{font-size:15px}}
+@media print{body{background:white}.toolbar,.notice,.no-print,footer{display:none!important}main{max-width:none;margin:0;padding:0}.branch{break-inside:avoid;box-shadow:none;margin:10px 0}.people{grid-template-columns:repeat(4,1fr)}.person{min-height:100px;padding:7px}.avatar{width:35px;height:35px}.branch h2{background:#eee!important;color:#000}header{background:#fff!important;color:#000;border-bottom:2px solid #777;padding:10px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header><h1>🌳 કુબાવત પરિવારનું વંશવૃક્ષ</h1><p>Kubavat Family Tree · ફોટા, વિગતો અને નામ તમે જાતે બદલી શકો છો</p></header>
+<div class="toolbar no-print">
+<button onclick="openAdd()">＋ નવો સભ્ય ઉમેરો</button>
+<button class="secondary" onclick="window.print()">🖨️ પ્રિન્ટ / PDF</button>
+<button class="secondary" onclick="exportData()">⬇️ બેકઅપ ડાઉનલોડ</button>
+<button class="secondary" onclick="document.getElementById('importFile').click()">⬆️ બેકઅપ પાછો લાવો</button>
+<button class="gold" onclick="resetData()">મૂળ માહિતી ફરી લાવો</button>
+<input id="importFile" type="file" accept=".json,application/json" hidden onchange="importData(event)">
+</div>
+<main>
+<div class="notice no-print"><b>કેવી રીતે વાપરવું?</b> કોઈપણ વ્યક્તિના કાર્ડ પર ક્લિક કરો એટલે તેની સંપૂર્ણ વિગતો ખુલશે. પછી “માહિતી સંપાદિત કરો”થી નામ, સંબંધ, જીવનસાથી, સંતાનો, નોંધ અને ફોટો બદલી શકો છો. ફેરફારો આ બ્રાઉઝરમાં આપમેળે સાચવાય છે. સુરક્ષિત બેકઅપ માટે સમયાંતરે “બેકઅપ ડાઉનલોડ” દબાવો.</div>
+<div id="tree"></div>
+</main>
+<footer>કુટુંબની ખાનગી માહિતી માટે આ ફાઇલ તમારા પોતાના ઉપકરણમાં જ રાખો. ફોટા અને ફેરફારો આ જ બ્રાઉઝરમાં સંગ્રહાય છે.</footer>
+<dialog id="detailModal">
+<div class="modalhead"><strong id="detailTitle">સભ્યની માહિતી</strong><button class="secondary" onclick="closeModal('detailModal')">બંધ કરો ✕</button></div>
+<div class="modalbody"><div style="display:flex;gap:16px;align-items:center;margin-bottom:18px"><img id="detailPhoto" class="profile-photo" alt=""><div><div id="detailName" style="font-size:24px;font-weight:bold"></div><div id="detailRelation"></div></div></div><dl id="detailGrid"></dl></div>
+<div class="modalactions"><button onclick="editCurrent()">✏️ માહિતી સંપાદિત કરો</button><button class="secondary" onclick="closeModal('detailModal')">બરાબર</button></div>
+</dialog>
+<dialog id="editModal">
+<div class="modalhead"><strong id="editTitle">સભ્ય ઉમેરો / સંપાદિત કરો</strong><button class="secondary" onclick="closeModal('editModal')">બંધ કરો ✕</button></div>
+<form id="editForm" class="modalbody">
+<input type="hidden" id="f_id">
+<div class="row">
+<div class="field"><label>પૂરું નામ *</label><input id="f_name" required></div>
+<div class="field"><label>સંબંધ / ઓળખ</label><input id="f_relation" placeholder="જેમ કે દીકરો, પત્ની"></div>
+</div>
+<div class="row">
+<div class="field"><label>કુટુંબની શાખા</label><select id="f_branch"><option>મૂળ પેઢી</option><option>શ્રવણભાઈનો પરિવાર</option><option>ભગવતદાસનો પરિવાર</option><option>રમણીકલાલનો પરિવાર</option><option>અનિલકુમારનો પરિવાર</option><option>અન્ય / નવી શાખા</option></select></div>
+<div class="field"><label>જીવનસાથી</label><input id="f_spouse"></div>
+</div>
+<div class="field"><label>માતા-પિતા / સંબંધિત વડીલો</label><input id="f_parent"></div>
+<div class="field"><label>સંતાનોનાં નામ</label><input id="f_children"></div>
+<div class="field"><label>વધારાની માહિતી / જન્મ-મૃત્યુ તારીખ / ગામ વગેરે</label><textarea id="f_notes"></textarea></div>
+<div class="field"><label>ફોટો ઉમેરો અથવા બદલો</label><input id="f_photo" type="file" accept="image/*"><small>ફોટો આ બ્રાઉઝરમાં જ રાખવામાં આવશે. મોટી તસવીર હોય તો પહેલાં નાની સાઇઝનો ફોટો પસંદ કરો.</small><div id="photoPreview"></div></div>
+</form>
+<div class="modalactions"><button onclick="savePerson()">💾 સાચવો</button><button class="secondary" onclick="closeModal('editModal')">રદ કરો</button><button id="deleteBtn" class="secondary" style="margin-left:auto" onclick="deleteCurrent()">સભ્ય કાઢી નાખો</button></div>
+</dialog>
+<script>
+const initialData = [{"id": "bharatdas", "name": "ભરતદાસ", "relation": "પરદાદા", "branch": "મૂળ પેઢી", "spouse": "સરસ્વતીબેન", "parent": "—", "children": "શ્રવણભાઈ, ભગવતદાસ, રમણીકલાલ, અનિલકુમાર", "notes": ""}, {"id": "saraswati", "name": "સરસ્વતીબેન", "relation": "પરદાદી", "branch": "મૂળ પેઢી", "spouse": "ભરતદાસ", "parent": "—", "children": "શ્રવણભાઈ, ભગવતદાસ, રમણીકલાલ, અનિલકુમાર", "notes": ""}, {"id": "shravan", "name": "શ્રવણભાઈ", "relation": "દીકરો", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "ભરતદાસ અને સરસ્વતીબેન", "children": "દિનેશભાઈ, હર્ષાબેન, નામ અજ્ઞાત દીકરી, રસીલાબેન", "notes": "પત્નીનું નામ હજી મળ્યું નથી."}, {"id": "dinesh", "name": "દિનેશભાઈ", "relation": "દીકરો", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "શોભનાબેન", "parent": "શ્રવણભાઈ", "children": "બીપીનભાઈ, મનીષભાઈ", "notes": ""}, {"id": "shobhana", "name": "શોભનાબેન", "relation": "પત્ની", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "દિનેશભાઈ", "parent": "—", "children": "બીપીનભાઈ, મનીષભાઈ", "notes": ""}, {"id": "harsha", "name": "હર્ષાબેન", "relation": "દીકરી", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "શ્રવણભાઈ", "children": "માહિતી બાકી", "notes": ""}, {"id": "unknown_daughter", "name": "નામ અજ્ઞાત દીકરી", "relation": "દીકરી", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "શ્રવણભાઈ", "children": "માહિતી બાકી", "notes": "નામ પછી ઉમેરવાનું છે."}, {"id": "rasila", "name": "રસીલાબેન", "relation": "સૌથી નાની દીકરી", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "શ્રવણભાઈ", "children": "માહિતી બાકી", "notes": ""}, {"id": "bipin", "name": "બીપીનભાઈ", "relation": "દીકરો", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "પૂનમબેન", "parent": "દિનેશભાઈ અને શોભનાબેન", "children": "જીગરભાઈ, હેન્શીબેન", "notes": ""}, {"id": "poonam", "name": "પૂનમબેન", "relation": "પત્ની", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "બીપીનભાઈ", "parent": "—", "children": "જીગરભાઈ, હેન્શીબેન", "notes": ""}, {"id": "jigar", "name": "જીગરભાઈ", "relation": "દીકરો", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "બીપીનભાઈ અને પૂનમબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "henshi", "name": "હેન્શીબેન", "relation": "દીકરી", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "બીપીનભાઈ અને પૂનમબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "manish_shravan", "name": "મનીષભાઈ", "relation": "દીકરો", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "પૂજાબેન", "parent": "દિનેશભાઈ અને શોભનાબેન", "children": "રામ, ક્રિશ", "notes": ""}, {"id": "puja_shravan", "name": "પૂજાબેન", "relation": "પત્ની", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "મનીષભાઈ", "parent": "—", "children": "રામ, ક્રિશ", "notes": ""}, {"id": "ram", "name": "રામ", "relation": "દીકરો", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "મનીષભાઈ અને પૂજાબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "krish", "name": "ક્રિશ", "relation": "દીકરો", "branch": "શ્રવણભાઈનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "મનીષભાઈ અને પૂજાબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "bhagvatdas", "name": "ભગવતદાસ", "relation": "દીકરો", "branch": "ભગવતદાસનો પરિવાર", "spouse": "અનિલાબેન", "parent": "ભરતદાસ અને સરસ્વતીબેન", "children": "હરકિશનભાઈ, રમેશભાઈ, સંગીતાબેન", "notes": ""}, {"id": "anilaben", "name": "અનિલાબેન", "relation": "પત્ની", "branch": "ભગવતદાસનો પરિવાર", "spouse": "ભગવતદાસ", "parent": "—", "children": "હરકિશનભાઈ, રમેશભાઈ, સંગીતાબેન", "notes": ""}, {"id": "harkishan", "name": "હરકિશનભાઈ", "relation": "મોટો દીકરો", "branch": "ભગવતદાસનો પરિવાર", "spouse": "વર્ષાબેન", "parent": "ભગવતદાસ અને અનિલાબેન", "children": "હેતશ્વી", "notes": ""}, {"id": "varsha", "name": "વર્ષાબેન", "relation": "પત્ની", "branch": "ભગવતદાસનો પરિવાર", "spouse": "હરકિશનભાઈ", "parent": "—", "children": "હેતશ્વી", "notes": ""}, {"id": "hetashvi", "name": "હેતશ્વી", "relation": "દીકરી", "branch": "ભગવતદાસનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "હરકિશનભાઈ અને વર્ષાબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "ramesh", "name": "રમેશભાઈ", "relation": "નાનો દીકરો", "branch": "ભગવતદાસનો પરિવાર", "spouse": "નયનાબેન", "parent": "ભગવતદાસ અને અનિલાબેન", "children": "મોન્ટુ, શ્યામલ", "notes": ""}, {"id": "nayana", "name": "નયનાબેન", "relation": "પત્ની", "branch": "ભગવતદાસનો પરિવાર", "spouse": "રમેશભાઈ", "parent": "—", "children": "મોન્ટુ, શ્યામલ", "notes": ""}, {"id": "montu", "name": "મોન્ટુ", "relation": "મોટો દીકરો", "branch": "ભગવતદાસનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "રમેશભાઈ અને નયનાબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "shyamal", "name": "શ્યામલ", "relation": "નાનો દીકરો", "branch": "ભગવતદાસનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "રમેશભાઈ અને નયનાબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "sangeeta", "name": "સંગીતાબેન", "relation": "સૌથી નાની દીકરી", "branch": "ભગવતદાસનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "ભગવતદાસ અને અનિલાબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "ramniklal", "name": "રમણીકલાલ", "relation": "દીકરો", "branch": "રમણીકલાલનો પરિવાર", "spouse": "પુષ્પાબેન", "parent": "ભરતદાસ અને સરસ્વતીબેન", "children": "દિલીપભાઈ, વિજયભાઈ, વીણાબેન", "notes": ""}, {"id": "pushpa", "name": "પુષ્પાબેન", "relation": "પત્ની", "branch": "રમણીકલાલનો પરિવાર", "spouse": "રમણીકલાલ", "parent": "—", "children": "દિલીપભાઈ, વિજયભાઈ, વીણાબેન", "notes": ""}, {"id": "dilip", "name": "દિલીપભાઈ", "relation": "દીકરો", "branch": "રમણીકલાલનો પરિવાર", "spouse": "સોનલબેન", "parent": "રમણીકલાલ અને પુષ્પાબેન", "children": "સંધ્યાબેન, પૂજાબેન, જયદીપભાઈ, લખનભાઈ", "notes": ""}, {"id": "sonal", "name": "સોનલબેન", "relation": "પત્ની", "branch": "રમણીકલાલનો પરિવાર", "spouse": "દિલીપભાઈ", "parent": "—", "children": "સંધ્યાબેન, પૂજાબેન, જયદીપભાઈ, લખનભાઈ", "notes": ""}, {"id": "sandhya", "name": "સંધ્યાબેન", "relation": "મોટી દીકરી", "branch": "રમણીકલાલનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "દિલીપભાઈ અને સોનલબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "puja_dilip", "name": "પૂજાબેન", "relation": "બીજી દીકરી", "branch": "રમણીકલાલનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "દિલીપભાઈ અને સોનલબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "jaydeep", "name": "જયદીપભાઈ", "relation": "ત્રીજું સંતાન", "branch": "રમણીકલાલનો પરિવાર", "spouse": "દીપાલીબેન", "parent": "દિલીપભાઈ અને સોનલબેન", "children": "ધનેશ્વરી", "notes": ""}, {"id": "deepali", "name": "દીપાલીબેન", "relation": "પત્ની", "branch": "રમણીકલાલનો પરિવાર", "spouse": "જયદીપભાઈ", "parent": "—", "children": "ધનેશ્વરી", "notes": ""}, {"id": "dhaneshwari", "name": "ધનેશ્વરી", "relation": "દીકરી", "branch": "રમણીકલાલનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "જયદીપભાઈ અને દીપાલીબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "lakhan", "name": "લખનભાઈ", "relation": "સૌથી નાના દીકરા", "branch": "રમણીકલાલનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "દિલીપભાઈ અને સોનલબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "vijay", "name": "વિજયભાઈ", "relation": "દીકરો", "branch": "રમણીકલાલનો પરિવાર", "spouse": "બકુલાબેન", "parent": "રમણીકલાલ અને પુષ્પાબેન", "children": "શનીભાઈ, ઓમભાઈ", "notes": ""}, {"id": "bakula", "name": "બકુલાબેન", "relation": "પત્ની", "branch": "રમણીકલાલનો પરિવાર", "spouse": "વિજયભાઈ", "parent": "—", "children": "શનીભાઈ, ઓમભાઈ", "notes": ""}, {"id": "shani", "name": "શનીભાઈ", "relation": "દીકરો", "branch": "રમણીકલાલનો પરિવાર", "spouse": "કોમલબેન", "parent": "વિજયભાઈ અને બકુલાબેન", "children": "યથાર્થ", "notes": "વંશવૃક્ષ તૈયાર કરનાર."}, {"id": "komal", "name": "કોમલબેન", "relation": "પત્ની", "branch": "રમણીકલાલનો પરિવાર", "spouse": "શનીભાઈ", "parent": "—", "children": "યથાર્થ", "notes": ""}, {"id": "yatharth", "name": "યથાર્થ", "relation": "દીકરો", "branch": "રમણીકલાલનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "શનીભાઈ અને કોમલબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "om", "name": "ઓમભાઈ", "relation": "નાનો દીકરો", "branch": "રમણીકલાલનો પરિવાર", "spouse": "વૈશાલીબેન", "parent": "વિજયભાઈ અને બકુલાબેન", "children": "ધ્યેય", "notes": ""}, {"id": "vaishali", "name": "વૈશાલીબેન", "relation": "પત્ની", "branch": "રમણીકલાલનો પરિવાર", "spouse": "ઓમભાઈ", "parent": "—", "children": "ધ્યેય", "notes": ""}, {"id": "dhyey", "name": "ધ્યેય", "relation": "દીકરો", "branch": "રમણીકલાલનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "ઓમભાઈ અને વૈશાલીબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "vina", "name": "વીણાબેન", "relation": "દીકરી", "branch": "રમણીકલાલનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "રમણીકલાલ અને પુષ્પાબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "anilkumar", "name": "અનિલકુમાર", "relation": "દીકરો", "branch": "અનિલકુમારનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "ભરતદાસ અને સરસ્વતીબેન", "children": "ચકુબેન, દક્ષાબેન, ધર્મેશભાઈ, મનીષભાઈ", "notes": "પત્નીનું નામ હજી મળ્યું નથી."}, {"id": "chaku", "name": "ચકુબેન", "relation": "સૌથી મોટાં સંતાન", "branch": "અનિલકુમારનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "અનિલકુમાર", "children": "માહિતી બાકી", "notes": ""}, {"id": "daksha", "name": "દક્ષાબેન", "relation": "બીજું સંતાન", "branch": "અનિલકુમારનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "અનિલકુમાર", "children": "માહિતી બાકી", "notes": ""}, {"id": "dharmesh", "name": "ધર્મેશભાઈ", "relation": "ત્રીજું સંતાન", "branch": "અનિલકુમારનો પરિવાર", "spouse": "ડોલીબેન", "parent": "અનિલકુમાર", "children": "કાવેરીબેન, દેવ", "notes": ""}, {"id": "doli", "name": "ડોલીબેન", "relation": "પત્ની", "branch": "અનિલકુમારનો પરિવાર", "spouse": "ધર્મેશભાઈ", "parent": "—", "children": "કાવેરીબેન, દેવ", "notes": ""}, {"id": "kaveri", "name": "કાવેરીબેન", "relation": "મોટી દીકરી", "branch": "અનિલકુમારનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "ધર્મેશભાઈ અને ડોલીબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "dev", "name": "દેવ", "relation": "નાનો દીકરો", "branch": "અનિલકુમારનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "ધર્મેશભાઈ અને ડોલીબેન", "children": "માહિતી બાકી", "notes": ""}, {"id": "manish_anil", "name": "મનીષભાઈ", "relation": "સૌથી નાના દીકરા", "branch": "અનિલકુમારનો પરિવાર", "spouse": "માહિતી બાકી", "parent": "અનિલકુમાર", "children": "માહિતી બાકી", "notes": ""}];
+const key='kubavatFamilyTree_v1';
+let people=loadData(), currentId=null, photoData='';
+function loadData(){try{const x=localStorage.getItem(key);return x?JSON.parse(x):structuredClone(initialData)}catch(e){return structuredClone(initialData)}}
+function saveLocal(){try{localStorage.setItem(key,JSON.stringify(people))}catch(e){alert('બ્રાઉઝરમાં જગ્યા ઓછી છે. ફોટા નાના કરો અથવા બેકઅપ લો.');}}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function avatar(p){return p.photo?`<img src="${p.photo}" alt="">`:`<span>${esc((p.name||'?').slice(0,1))}</span>`}
+function render(){
+ const branches=['મૂળ પેઢી','શ્રવણભાઈનો પરિવાર','ભગવતદાસનો પરિવાર','રમણીકલાલનો પરિવાર','અનિલકુમારનો પરિવાર','અન્ય / નવી શાખા'];
+ document.getElementById('tree').innerHTML=branches.map(b=>{
+  const list=people.filter(p=>p.branch===b);
+  if(!list.length)return '';
+  return `<section class="branch"><h2>${esc(b)} <small style="font-size:13px;font-weight:normal">(${list.length} સભ્યો)</small></h2><div class="people">${list.map(p=>`<div class="person" role="button" tabindex="0" onclick="showPerson('${p.id}')" onkeydown="if(event.key==='Enter')showPerson('${p.id}')"><div class="avatar">${avatar(p)}</div><strong>${esc(p.name)}</strong><small>${esc(p.relation||'સભ્ય')}</small><small>જીવનસાથી: ${esc(p.spouse||'માહિતી બાકી')}</small></div>`).join('')}</div></section>`
+ }).join('');
+}
+function showPerson(id){const p=people.find(x=>x.id===id);if(!p)return;currentId=id;
+ document.getElementById('detailTitle').textContent='સભ્યની સંપૂર્ણ માહિતી';
+ document.getElementById('detailName').textContent=p.name||'નામ નથી';
+ document.getElementById('detailRelation').textContent=p.relation||'';
+ document.getElementById('detailPhoto').src=p.photo||'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect width="100%25" height="100%25" fill="%23edf1f3"/%3E%3C/svg%3E';
+ const fields=[['કુટુંબની શાખા',p.branch],['જીવનસાથી',p.spouse],['માતા-પિતા / વડીલો',p.parent],['સંતાનો',p.children],['વધારાની માહિતી',p.notes]];
+ document.getElementById('detailGrid').innerHTML=fields.map(([a,b])=>`<dt>${esc(a)}</dt><dd>${esc(b||'માહિતી ઉમેરવાની બાકી')}</dd>`).join('');
+ document.getElementById('detailModal').showModal();
+}
+function openAdd(){currentId=null;photoData='';document.getElementById('editTitle').textContent='નવો સભ્ય ઉમેરો';document.getElementById('editForm').reset();document.getElementById('f_id').value='';document.getElementById('deleteBtn').style.display='none';document.getElementById('photoPreview').innerHTML='';document.getElementById('editModal').showModal()}
+function editCurrent(){closeModal('detailModal');const p=people.find(x=>x.id===currentId);if(!p)return;photoData=p.photo||'';
+ document.getElementById('editTitle').textContent='સભ્યની માહિતી સંપાદિત કરો';document.getElementById('f_id').value=p.id;
+ for(const [field,key] of [['name','name'],['relation','relation'],['branch','branch'],['spouse','spouse'],['parent','parent'],['children','children'],['notes','notes']])document.getElementById('f_'+field).value=p[key]||'';
+ document.getElementById('f_photo').value='';document.getElementById('photoPreview').innerHTML=photoData?`<img class="profile-photo" src="${photoData}">`:'';document.getElementById('deleteBtn').style.display='inline-block';document.getElementById('editModal').showModal()
+}
+document.getElementById('f_photo').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=ev=>{const img=new Image();img.onload=()=>{const canvas=document.createElement('canvas');const max=500;let w=img.width,h=img.height;if(w>h&&w>max){h=Math.round(h*max/w);w=max}else if(h>max){w=Math.round(w*max/h);h=max}canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);photoData=canvas.toDataURL('image/jpeg',.78);document.getElementById('photoPreview').innerHTML=`<img class="profile-photo" src="${photoData}">`};img.src=ev.target.result};reader.readAsDataURL(f)});
+function savePerson(){const name=document.getElementById('f_name').value.trim();if(!name){alert('કૃપા કરીને નામ લખો.');return}
+ const id=document.getElementById('f_id').value||('person_'+Date.now());
+ const p={id,name,relation:document.getElementById('f_relation').value.trim(),branch:document.getElementById('f_branch').value,spouse:document.getElementById('f_spouse').value.trim(),parent:document.getElementById('f_parent').value.trim(),children:document.getElementById('f_children').value.trim(),notes:document.getElementById('f_notes').value.trim(),photo:photoData||''};
+ const ix=people.findIndex(x=>x.id===id);if(ix>=0)people[ix]=p;else people.push(p);
+ saveLocal();render();closeModal('editModal');if(ix>=0)showPerson(id);alert('માહિતી સાચવાઈ ગઈ છે.')}
+function deleteCurrent(){const id=document.getElementById('f_id').value;if(!id)return;if(!confirm('આ સભ્યને વંશવૃક્ષમાંથી કાઢી નાખવો છે?'))return;people=people.filter(p=>p.id!==id);saveLocal();render();closeModal('editModal');}
+function closeModal(id){document.getElementById(id).close()}
+function exportData(){const blob=new Blob([JSON.stringify(people,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Kubavat_Family_Tree_Backup.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x))throw Error();if(confirm('હાલની માહિતીની જગ્યાએ આ બેકઅપ લાવવો છે?')){people=x;saveLocal();render();alert('બેકઅપ સફળતાપૂર્વક લોડ થયો.')}}catch(err){alert('આ JSON બેકઅપ ફાઇલ વાંચી શકાઈ નથી.')}e.target.value=''};r.readAsText(f)}
+function resetData(){if(confirm('આ બ્રાઉઝરમાં કરેલા બધા ફેરફારો દૂર કરીને શરૂઆતની માહિતી લાવવી છે? પહેલાં બેકઅપ લઈ લો.')){people=structuredClone(initialData);saveLocal();render()}}
+render();
+</script>
+</body>
+</html>
